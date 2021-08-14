@@ -1,0 +1,14 @@
+[Unit]
+Description=Show a warning light if there are services not working
+After=network.target autossh-tunnel.service hue-emulator
+
+[Service]
+Type=simple
+User=pi
+ExecStart=/home/pi/raspi-services/service_test.py
+Restart=on-failure
+RestartSec=30
+Environment=LC_ALL=en_US.UTF-8
+
+[Install]
+WantedBy=multi-user.target

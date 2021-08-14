@@ -1,0 +1,11 @@
+[Unit]
+Description=AutoSSH tunnel for grafana (3000) and temperature (8000)
+After=network.target grafana-server.service tempserver.service
+Before=telegraf.service
+
+[Service]
+Environment="AUTOSSH_GATETIME=0"
+ExecStart=autossh -N -M 0 -o "ServerAliveCountMax 3" -o "ServerAliveInterval 30" -i /home/pi/.ssh/id_rsa -R 3000:localhost:3000 -R 8000:localhost:8000 -R 8888:localhost:80 tunnel@crow.asinif.com
+
+[Install]
+WantedBy=multi-user.target
